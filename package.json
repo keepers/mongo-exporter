@@ -1,0 +1,18 @@
+{
+  "name": "mongo-exporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon api.js"
+  },
+  "author": "Ignacio Anaya <ignacio.anaya89@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}

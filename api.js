@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const jwt = require('express-jwt');
 
 const app = express()
@@ -14,6 +15,8 @@ function auth (req, res, next) {
 
   return jwt({ secret })(req, res, next)
 }
+
+app.use(cors())
 
 app.get('/export/:key/:collection', auth, (req, res, next) => {
   console.log(`Exporting collection ${collection} of ${key} db`)

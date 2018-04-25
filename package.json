@@ -10,6 +10,7 @@
   "author": "Ignacio Anaya <ignacio.anaya89@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-jwt": "^5.3.1"
   },

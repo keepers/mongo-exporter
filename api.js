@@ -19,13 +19,10 @@ function auth (req, res, next) {
 app.use(cors())
 
 app.get('/export/:key/:collection', auth, (req, res, next) => {
+  const { collection, key } = req.params
   console.log(`Exporting collection ${collection} of ${key} db`)
 
-  mongoexport({
-    key: req.params.key,
-    collection: req.params.collection,
-    fields: req.query.fields
-  }, (err, fileName) => {
+  mongoexport({ key, collection, fields: req.query.fields }, (err, fileName) => {
     if (err) {
       console.log(`Export failed: ${err}`)
       return next(err)

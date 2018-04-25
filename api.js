@@ -15,18 +15,28 @@ function auth (req, res, next) {
   return jwt({ secret })(req, res, next)
 }
 
-app.get('/export/:key/:collection', auth, function(req, res, next) {
+app.get('/export/:key/:collection', auth, (req, res, next) => {
+  console.log(`Exporting collection ${collection} of ${key} db`)
+
   mongoexport({
-    key: 'lkm',
+    key: req.params.key,
     collection: req.params.collection,
     fields: req.query.fields
-  }, (a, b, c) => {
-    return res.send({ a, b, c })
+  }, (err, fileName) => {
+    if (err) {
+      console.log(`Export failed: ${err}`)
+      return next(err)
+    }
+
+    console.log(`Export completed succesfully at ${fileName}`)
+    return res.sendFile(fileName)
   })
 })
 
-
-app.get('/', (req, res) => res.send('mongo-exporter'))
+app.get('/', (req, res) => {
+  console.log('Ping!')
+  res.send('Pong!')
+})
 
 const port = process.env.PORT || 5000
-app.listen(port, () => console.log(`Example app listening on port ${port}🚀`))
+app.listen(port, () => console.log(`Mongo Exporter listening on port ${port}🚀`))

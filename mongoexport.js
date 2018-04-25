@@ -1,8 +1,13 @@
+const path = require('path')
 const exec = require('child_process').exec
 const config = require('./config')
 
 function mongoexport({ key, collection, fields, type = 'csv', output = '' }, cb) {
   output || (output = `${collection}.${type}`)
+  output = `./exports/${key}/${output}`
+
+  output = path.join(__dirname, output)
+
   const { host, db, user, password } = config.databases[key]
   const command =  `mongoexport -h ${host} --db ${db}  -u ${user} -p ${password} --type=${type} --collection ${collection} --out ${output} --fields ${fields}`
 
@@ -15,7 +20,7 @@ function mongoexport({ key, collection, fields, type = 'csv', output = '' }, cb)
       return cb(err)
     }
 
-    return cb(null, stdout, stderr)
+    return cb(null, output)
   })
 }
 
